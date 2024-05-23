@@ -26,6 +26,18 @@ public class JpaDemoApplication implements CommandLineRunner {
         findAllById();
     }
 
+    private void saveAllCategories(){
+        List<Category> categories = getListaCategorias();
+        categoryRepository.saveAll(categories);
+    }
+
+    private void exitedId(){
+        boolean exists = categoryRepository.existsById(1);
+        if(exists){
+            categoryRepository.deleteById(1);
+        }
+    }
+
     private void findAllCategories(){
         Iterable<Category> categories = categoryRepository.findAll();
         categories.forEach(System.out::println);
@@ -85,5 +97,28 @@ public class JpaDemoApplication implements CommandLineRunner {
 
     private void delete(){
         System.out.println("deleted");
+    }
+
+    private List<Category> getListaCategorias(){
+        List<Category> lista = new LinkedList<Category>();
+        // Categoria 1
+        Category cat1 = new Category();
+        cat1.setName("Programador de Blockchain");
+        cat1.setDescription("Trabajos relacionados con Bitcoin y Criptomonedas");
+
+        // Categoria 2
+        Category cat2 = new Category();
+        cat2.setName("Soldador/Pintura");
+        cat2.setDescription("Trabajos relacionados con soldadura, pintura y enderezado");
+
+        // Categoria 3
+        Category cat3 = new Category();
+        cat3.setName("Ingeniero Industrial");
+        cat3.setDescription("Trabajos relacionados con Ingenieria industrial.");
+
+        lista.add(cat1);
+        lista.add(cat2);
+        lista.add(cat3);
+        return lista;
     }
 }

@@ -3,7 +3,7 @@ package org.rsierra.models;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "Categorias")
+@Table(name = "Category")
 public class Category {
 
     @Id

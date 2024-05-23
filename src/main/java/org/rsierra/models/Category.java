@@ -1,18 +1,24 @@
 package org.rsierra.models;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "Categorias")
 public class Category {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
     private String description;
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
-
     public String getName() {
         return name;
     }

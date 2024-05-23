@@ -26,6 +26,11 @@ public class JpaDemoApplication implements CommandLineRunner {
         findAllById();
     }
 
+    private void findAllCategories(){
+        Iterable<Category> categories = categoryRepository.findAll();
+        categories.forEach(System.out::println);
+    }
+
      private void findAllById(){
          List<Integer> ids = new LinkedList<>();
          ids.add(1);

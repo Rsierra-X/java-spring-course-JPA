@@ -6,6 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -38,9 +41,28 @@ public class JpaDemoApplication implements CommandLineRunner {
         }
     }
 
+    private void findAllCategoriesSorted(){
+        List<Category> categories = categoryRepository.findAll(Sort.by("name").descending());
+        for(Category category : categories){
+            System.out.println(category);
+        }
+    }
+
+    private void findAllCategoriesPagination(){
+        Page<Category> categoriesPage = categoryRepository.findAll(PageRequest.of(1,5));
+        System.out.println("Totoal de paginas"+ categoriesPage.getTotalPages());
+        System.out.println("Totoal de elements"+ categoriesPage.getTotalElements());
+        for(Category category : categoriesPage.getContent()){
+            System.out.println(category);
+        }
+    }
+
     private void findAllCategories(){
-        Iterable<Category> categories = categoryRepository.findAll();
-        categories.forEach(System.out::println);
+        /*Iterable<Category> categories = categoryRepository.findAll();*/
+        List<Category> categories = categoryRepository.findAll();
+        for(Category category : categories){
+            System.out.println(category);
+        }
     }
 
      private void findAllById(){
@@ -53,7 +75,9 @@ public class JpaDemoApplication implements CommandLineRunner {
     }
 
     private void deleteAllCategories() {
-        categoryRepository.deleteAll();
+        /*categoryRepository.deleteAll();*/
+        //This function delete all, take care
+        categoryRepository.deleteAllInBatch();
     }
 
     private void countCategories(){

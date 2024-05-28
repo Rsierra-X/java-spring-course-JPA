@@ -1,7 +1,9 @@
 package org.rsierra;
 
 import org.rsierra.models.Category;
+import org.rsierra.models.Vacancy;
 import org.rsierra.repository.CategoryRepository;
+import org.rsierra.repository.VacancyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -20,14 +22,29 @@ public class JpaDemoApplication implements CommandLineRunner {
     @Autowired
     private CategoryRepository categoryRepository;
 
+    @Autowired
+    private VacancyRepository vacancyRepository;
+
     public static void main(String[] args) {
         SpringApplication.run(JpaDemoApplication.class, args);
     }
 
     @Override
     public void run(String... args) throws Exception {
-        findAllById();
+        findAllVacancy();
     }
+
+    /*Methods for Vacancies*/
+
+    private void findAllVacancy(){
+        List<Vacancy> vacancies = vacancyRepository.findAll();
+        for (Vacancy vacancy : vacancies) {
+            System.out.println(vacancy.getId() + " " + vacancy.getName());
+        }
+    }
+
+
+    /*Methods for Categories*/
 
     private void saveAllCategories(){
         List<Category> categories = getListaCategorias();

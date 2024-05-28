@@ -1,9 +1,15 @@
 package org.rsierra.models;
 
+import jakarta.persistence.*;
+
 import java.util.Date;
 
+@Entity
+@Table(name = "Vacancy")
 public class Vacancy {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
     private String description;
@@ -13,6 +19,8 @@ public class Vacancy {
     private Double salary;
     private Integer featured;
     private String image = "no-image.png";
+    @OneToOne
+    @JoinColumn(name = "idCategory")
     private Category category;
 
     public String getStatus() {

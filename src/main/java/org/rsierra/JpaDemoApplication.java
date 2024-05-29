@@ -1,8 +1,11 @@
 package org.rsierra;
 
 import org.rsierra.models.Category;
+import org.rsierra.models.Profile;
 import org.rsierra.models.Vacancy;
 import org.rsierra.repository.CategoryRepository;
+import org.rsierra.repository.ProfileRepository;
+import org.rsierra.repository.UserRepository;
 import org.rsierra.repository.VacancyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -25,13 +28,24 @@ public class JpaDemoApplication implements CommandLineRunner {
     @Autowired
     private VacancyRepository vacancyRepository;
 
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private ProfileRepository profileRepository;
+
     public static void main(String[] args) {
         SpringApplication.run(JpaDemoApplication.class, args);
     }
 
     @Override
     public void run(String... args) throws Exception {
-        findAllVacancy();
+        createProfilesApplication();
+    }
+
+    /*Methods for profiles*/
+    private void createProfilesApplication() {
+        profileRepository.saveAll(getProfileApplication());
     }
 
     /*Methods for Vacancies*/
@@ -161,5 +175,23 @@ public class JpaDemoApplication implements CommandLineRunner {
         lista.add(cat2);
         lista.add(cat3);
         return lista;
+    }
+
+    private List<Profile> getProfileApplication(){
+        List<Profile> list = new LinkedList<Profile>();
+        Profile per1 = new Profile();
+        per1.setProfile("SUPERVISOR");
+
+        Profile per2 = new Profile();
+        per2.setProfile("ADMINISTRADOR");
+
+        Profile per3 = new Profile();
+        per3.setProfile("USUARIO");
+
+        list.add(per1);
+        list.add(per2);
+        list.add(per3);
+
+        return list;
     }
 }

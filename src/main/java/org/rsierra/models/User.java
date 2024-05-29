@@ -3,6 +3,7 @@ package org.rsierra.models;
 import jakarta.persistence.*;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "User")
@@ -16,6 +17,13 @@ public class User {
     private String email;
     private Integer status;
     private Date registerDate;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "serProfile"
+            ,joinColumns = @JoinColumn(name = "idUser")
+            ,inverseJoinColumns = @JoinColumn(name="idProfile")
+    )
+    private List<Profile> profiles;
 
     public Integer getId() {
         return id;
@@ -63,6 +71,14 @@ public class User {
 
     public void setRegisterDate(Date registerDate) {
         this.registerDate = registerDate;
+    }
+
+    public List<Profile> getProfiles() {
+        return profiles;
+    }
+
+    public void setProfiles(List<Profile> profiles) {
+        this.profiles = profiles;
     }
 
     @Override

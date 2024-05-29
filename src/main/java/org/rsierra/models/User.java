@@ -2,7 +2,9 @@ package org.rsierra.models;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 @Entity
@@ -13,17 +15,33 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String username;
+    private String name;
     private String password;
     private String email;
     private Integer status;
     private Date registerDate;
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
-            name = "serProfile"
+            name = "userProfile"
             ,joinColumns = @JoinColumn(name = "idUser")
             ,inverseJoinColumns = @JoinColumn(name="idProfile")
     )
     private List<Profile> profiles;
+
+    public void addProfile(Profile profile) {
+        if (profiles == null) {
+            profiles = new LinkedList<Profile>();
+        }
+        profiles.add(profile);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public Integer getId() {
         return id;

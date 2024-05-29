@@ -2,6 +2,7 @@ package org.rsierra;
 
 import org.rsierra.models.Category;
 import org.rsierra.models.Profile;
+import org.rsierra.models.User;
 import org.rsierra.models.Vacancy;
 import org.rsierra.repository.CategoryRepository;
 import org.rsierra.repository.ProfileRepository;
@@ -15,6 +16,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -40,10 +42,32 @@ public class JpaDemoApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        createProfilesApplication();
+        createUserWithProfiles();
     }
 
     /*Methods for profiles*/
+
+    private void createUserWithProfiles() {
+        User user = new User();
+        user.setName("Ivan Tinajero");
+        user.setEmail("ivanetinajero@gmail.com");
+        user.setRegisterDate(new Date());
+        user.setUsername("itinajero");
+        user.setPassword("12345");
+        user.setStatus(1);
+
+        Profile per1 = new Profile();
+        per1.setId(2);
+
+        Profile per2 = new Profile();
+        per2.setId(3);
+
+        user.addProfile(per1);
+        user.addProfile(per2);
+
+        userRepository.save(user);
+    }
+
     private void createProfilesApplication() {
         profileRepository.saveAll(getProfileApplication());
     }

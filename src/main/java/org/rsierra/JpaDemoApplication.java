@@ -46,7 +46,7 @@ public class JpaDemoApplication implements CommandLineRunner {
     }
 
     public void searchUser() {
-        Optional<User> optional = userRepository.findById(50);
+        Optional<User> optional = userRepository.findById(1);
         if (optional.isPresent()) {
             User u = optional.get();
             System.out.println("Usuario: " + u.getName());

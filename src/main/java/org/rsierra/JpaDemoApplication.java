@@ -45,6 +45,41 @@ public class JpaDemoApplication implements CommandLineRunner {
         searchUser();
     }
 
+    private void findVacancyByMultipleStatus() {
+        String[] status = new String[] {"Eliminada", "Aprobada"};
+        List<Vacancy> lista = vacancyRepository.findByStatusIn(status);
+        System.out.println("Registros encontrados: " + lista.size());
+        for (Vacancy v : lista) {
+            System.out.println(v.getId() + ": " + v.getName() + ": " + v.getStatus());
+        }
+    }
+
+
+    private void findVacancyBySalary() {
+        List<Vacancy> lista = vacancyRepository.findBySalaryBetweenOrderBySalaryDesc(7000, 14000);
+        System.out.println("Registros encontrados: " + lista.size());
+        for (Vacancy v : lista) {
+            System.out.println(v.getId() + ": " + v.getName() + ": $" + v.getSalary());
+        }
+    }
+
+
+    private void findVacancyByFeaturedAndStatus() {
+        List<Vacancy> lista = vacancyRepository.findByFeaturedAndStatusOrderByIdDesc(1, "Aprobada");
+        System.out.println("Registros encontrados: " + lista.size());
+        for (Vacancy v : lista) {
+            System.out.println(v.getId() + ": " + v.getName() + ": " + v.getStatus() + ":" + v.getFeatured());
+        }
+    }
+
+    private void findVacancyByStatus() {
+        List<Vacancy> lista = vacancyRepository.findByStatus("Eliminada");
+        System.out.println("Registros encontrados: " + lista.size());
+        for (Vacancy v : lista) {
+            System.out.println(v.getId() + ": " + v.getName() + ": " + v.getStatus());
+        }
+    }
+
     public void searchUser() {
         Optional<User> optional = userRepository.findById(1);
         if (optional.isPresent()) {

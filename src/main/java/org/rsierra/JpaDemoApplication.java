@@ -42,7 +42,21 @@ public class JpaDemoApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        createUserWithProfiles();
+        searchUser();
+    }
+
+    public void searchUser() {
+        Optional<User> optional = userRepository.findById(50);
+        if (optional.isPresent()) {
+            User u = optional.get();
+            System.out.println("Usuario: " + u.getName());
+            System.out.println("Perfiles asignados");
+            for (Profile p : u.getProfiles()) {
+                System.out.println(p.getProfile());
+            }
+        }else {
+            System.out.println("Usuario no encontrado");
+        }
     }
 
     /*Methods for profiles*/
